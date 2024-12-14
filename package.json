@@ -1,0 +1,18 @@
+{
+  "name": "dev-setup",
+  "version": "1.0.0",
+  "description": "This project follows Semantic Versioning. Versions are managed automatically based on commit messages. ### Commit Message Convention - feat: New feature - fix: Bug fix - docs: Documentation changes - style: Code formatting - refactor: Code refactoring - test: Adding or modifying tests - chore: Changes to the build process or auxiliary tools   For more details, please refer to [CONTRIBUTING.md](CONTRIBUTING.md).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^13.0.0",
+    "@semantic-release/github": "^11.0.1",
+    "@semantic-release/release-notes-generator": "^14.0.1"
+  }
+}
