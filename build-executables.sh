@@ -1,14 +1,16 @@
+#!/usr/bin/env bash
+
 VERSION=$(cat VERSION)
 COMMIT=$(git rev-parse --short HEAD)
 DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
 platforms=(
-"darwin/amd64"
-"darwin/arm64"
-"linux/amd64"
-"linux/arm"
-"linux/arm64"
-"windows/amd64"
+  "darwin/amd64"
+  "darwin/arm64"
+  "linux/amd64"
+  "linux/arm"
+  "linux/arm64"
+  "windows/amd64"
 )
 
 for platform in "${platforms[@]}"
@@ -22,7 +24,7 @@ do
     os="macOS"
   fi
 
-  output_name="dev-setup-${version}-${os}-${GOARCH}"
+  output_name="dev-setup-${VERSION}-${os}-${GOARCH}"
   if [ $os = "windows" ]; then
     output_name+='.exe'
   fi

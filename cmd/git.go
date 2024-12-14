@@ -62,13 +62,13 @@ func init() {
 func run(logger *slog.Logger, isVerbose bool) error {
 	scriptContent, err := efs.EmbeddedFiles.ReadFile("scripts/git.sh")
 	if err != nil {
-		logger.Error("Failed to read embedded script: %v", err)
+		logger.Error("Failed to read embedded script", slog.Any("error", err))
 	}
 
 	// Create a temporary file to write the script
 	tmpFile, err := os.CreateTemp("", "script-*.sh")
 	if err != nil {
-		logger.Error("Failed to create temp file: %v", err)
+		logger.Error("Failed to create temp file", slog.Any("error", err))
 	}
 
 	// Clean up the file later
@@ -76,15 +76,15 @@ func run(logger *slog.Logger, isVerbose bool) error {
 
 	// Write the script to the temporary file
 	if _, err := tmpFile.Write(scriptContent); err != nil {
-		logger.Error("Failed to write script to temp file: %v", err)
+		logger.Error("Failed to write script to temp file", slog.Any("error", err))
 	}
 	if err := tmpFile.Close(); err != nil {
-		logger.Error("Failed to close temp file: %v", err)
+		logger.Error("Failed to close temp file", slog.Any("error", err))
 	}
 
 	// Make the script executable
 	if err := os.Chmod(tmpFile.Name(), 0755); err != nil {
-		logger.Error("Failed to chmod temp file: %v", err)
+		logger.Error("Failed to chmod temp file", slog.Any("error", err))
 	}
 
 	fmt.Println(tmpFile.Name())
@@ -96,7 +96,7 @@ func run(logger *slog.Logger, isVerbose bool) error {
 	localCmd.Stderr = os.Stderr
 
 	if err := localCmd.Run(); err != nil {
-		logger.Error("Failed to execute script: %v", err)
+		logger.Error("Failed to execute script", slog.Any("error", err))
 	}
 
 	usr, err := user.Current()
@@ -109,7 +109,7 @@ func run(logger *slog.Logger, isVerbose bool) error {
 	dstFile := path.Join(usr.HomeDir, ".gitconfig")
 	err = root.CopyFile("gitconfig.txt", dstFile, 0644)
 	if err != nil {
-		logger.Error("Failed to copy .gitconfig file: %v", err)
+		logger.Error("Failed to copy .gitconfig file", slog.Any("error", err))
 	}
 	dstFile = path.Join(usr.HomeDir, ".gitignore")
 	err = root.CopyFile("gitignore.txt", dstFile, 0644)
