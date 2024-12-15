@@ -22,16 +22,10 @@ THE SOFTWARE.
 package cmd
 
 import (
-	"fmt"
-	"github.com/dragonsecurity/dev-setup/helper"
 	"os"
 
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
-
-var cfgFile string
-var verbose bool
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -50,46 +44,4 @@ func Execute() {
 }
 
 func init() {
-	cobra.OnInitialize(initConfig)
-
-	// Here you will define your flags and configuration settings.
-	// Cobra supports persistent flags, which, if defined here,
-	// will be global for your application.
-
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.dev-setup.yaml)")
-	rootCmd.PersistentFlags().BoolVarP(&verbose, "verbose", "v", false, "verbose output")
-	rootCmd.PersistentFlags().StringP("author", "a", "YOUR NAME", "Author name for git commits")
-	rootCmd.PersistentFlags().StringP("email", "e", "", "Author name for git commits")
-	rootCmd.PersistentFlags().Bool("viper", true, "Use Viper for configuration")
-	viper.BindPFlag("author", rootCmd.PersistentFlags().Lookup("author"))
-	viper.BindPFlag("email", rootCmd.PersistentFlags().Lookup("email"))
-	viper.BindPFlag("useViper", rootCmd.PersistentFlags().Lookup("viper"))
-	viper.SetDefault("author", "YOUR NAME")
-	viper.SetDefault("email", "YOU@HERE.COM")
-}
-
-// initConfig reads in config file and ENV variables if set.
-func initConfig() {
-	if cfgFile != "" {
-		// Use config file from the flag.
-		viper.SetConfigFile(cfgFile)
-	} else {
-		// Find home directory.
-		home, err := os.UserHomeDir()
-		cobra.CheckErr(err)
-
-		// Search config in home directory with name ".dev-setup" (without extension).
-		viper.AddConfigPath(home)
-		viper.SetConfigType("yaml")
-		viper.SetConfigName(".dev-setup")
-	}
-
-	viper.AutomaticEnv() // read in environment variables that match
-	helper.HandleError(viper.BindEnv("author"))
-	helper.HandleError(viper.BindEnv("email"))
-	// If a config file is found, read it in.
-	if err := viper.ReadInConfig(); err == nil {
-
-		fmt.Fprintln(os.Stderr, "Using config file:", viper.ConfigFileUsed())
-	}
 }
