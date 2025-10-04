@@ -4,7 +4,7 @@ go 1.24.7
 
 require (
 	github.com/leaanthony/debme v1.2.1
-	github.com/lmittmann/tint v1.0.5
+	github.com/lmittmann/tint v1.1.2
 	github.com/spf13/cobra v1.8.1
 )
 
