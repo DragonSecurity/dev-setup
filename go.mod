@@ -1,6 +1,6 @@
 module github.com/dragonsecurity/dev-setup
 
-go 1.24.7
+go 1.25.1
 
 require (
 	github.com/leaanthony/debme v1.2.1
